@@ -220,7 +220,7 @@ def generate_gemini_summary(api_key, filtered_data_metrics):
 - Lokasi dengan engagement tertinggi: {', '.join(top_locations)}
 - Tanggal dengan engagement puncak: {max_engagement_date}
 
-Buat ringkasan strategi kampanye pemasaran yang komprehensif, menyoroti tindakan utama dan rekomendasi yang dapat ditindaklanjuti untuk meningkatkan kinerja. Fokus pada pemanfaatan kekuatan, mitigasi kelemahan, dan kapitalisasi peluang yang disorot oleh data. Ringkasan ini harus berisi sekitar 3-5 poin utama. Gunakan bahasa Indonesia.
+Buat ringkasan strategi kampanye pemasaran yang komprehensif, menyoroti tindakan utama dan rekomendasi yang dapat ditindaklanjutifor meningkatkan kinerja. Fokus pada pemanfaatan kekuatan, mitigasi kelemahan, dan kapitalisasi peluang yang disorot oleh data. Ringkasan ini harus berisi sekitar 3-5 poin utama. Gunakan bahasa Indonesia.
 """
 
     chat_history = [{"role": "user", "parts": [{"text": prompt}]}]
@@ -363,8 +363,8 @@ if df is not None and not df.empty:
         sentiment_counts = filtered_df['Sentiment'].value_counts().reset_index()
         sentiment_counts.columns = ['Sentiment', 'Count']
         fig_sentiment = px.pie(sentiment_counts, values='Count', names='Sentiment',
-                                title='Analisis Sentimen', hole=0.4,
-                                color_discrete_map={'Positive':'#4CAF50', 'Netral':'#FFC107', 'Negative':'#F44336'})
+                                 title='Analisis Sentimen', hole=0.4,
+                                 color_discrete_map={'Positive':'#4CAF50', 'Netral':'#FFC107', 'Negative':'#F44336'})
         fig_sentiment.update_traces(textinfo='percent+label', pull=[0.05 if s == 'Positive' else 0 for s in sentiment_counts['Sentiment']])
         fig_sentiment.update_layout(height=350, margin=dict(t=50, b=20, l=20, r=20), showlegend=True)
         st.plotly_chart(fig_sentiment, use_container_width=True)
@@ -381,7 +381,7 @@ if df is not None and not df.empty:
         engagement_trend = filtered_df.groupby(filtered_df['Date'].dt.date)['Engagements'].sum().reset_index()
         engagement_trend.columns = ['Date', 'Total Engagements']
         fig_engagement_trend = px.line(engagement_trend, x='Date', y='Total Engagements',
-                                        title='Tren Engagement Seiring Waktu')
+                                         title='Tren Engagement Seiring Waktu')
         fig_engagement_trend.update_traces(mode='lines+markers', line=dict(color='#2196F3', width=2), marker=dict(size=6))
         fig_engagement_trend.update_layout(height=350, margin=dict(t=50, b=80, l=60, r=20))
         st.plotly_chart(fig_engagement_trend, use_container_width=True)
@@ -398,7 +398,7 @@ if df is not None and not df.empty:
         platform_engagements = filtered_df.groupby('Platform')['Engagements'].sum().reset_index()
         platform_engagements = platform_engagements.sort_values(by='Engagements', ascending=False)
         fig_platform = px.bar(platform_engagements, x='Platform', y='Engagements',
-                               title='Engagement Berdasarkan Platform', color_discrete_sequence=['#FF9800'])
+                                 title='Engagement Berdasarkan Platform', color_discrete_sequence=['#FF9800'])
         fig_platform.update_layout(height=350, margin=dict(t=50, b=60, l=60, r=20))
         st.plotly_chart(fig_platform, use_container_width=True)
         st.markdown('<h4>Wawasan Utama:</h4>')
@@ -414,8 +414,8 @@ if df is not None and not df.empty:
         media_type_counts = filtered_df['Media Type'].value_counts().reset_index()
         media_type_counts.columns = ['Media Type', 'Count']
         fig_media_type = px.pie(media_type_counts, values='Count', names='Media Type',
-                                title='Distribusi Tipe Media', hole=0.4,
-                                color_discrete_sequence=px.colors.qualitative.Pastel)
+                                 title='Distribusi Tipe Media', hole=0.4,
+                                 color_discrete_sequence=px.colors.qualitative.Pastel)
         fig_media_type.update_traces(textinfo='percent+label')
         fig_media_type.update_layout(height=350, margin=dict(t=50, b=20, l=20, r=20), showlegend=True)
         st.plotly_chart(fig_media_type, use_container_width=True)
@@ -432,7 +432,7 @@ if df is not None and not df.empty:
         location_engagements = filtered_df.groupby('Location')['Engagements'].sum().reset_index()
         top_5_locations = location_engagements.sort_values(by='Engagements', ascending=False).head(5)
         fig_locations = px.bar(top_5_locations, x='Location', y='Engagements',
-                                title='Top 5 Lokasi Berdasarkan Engagement', color_discrete_sequence=['#673AB7'])
+                                 title='Top 5 Lokasi Berdasarkan Engagement', color_discrete_sequence=['#673AB7'])
         fig_locations.update_layout(height=350, margin=dict(t=50, b=60, l=60, r=20))
         st.plotly_chart(fig_locations, use_container_width=True)
         st.markdown('<h4>Wawasan Utama:</h4>')
@@ -449,7 +449,7 @@ if df is not None and not df.empty:
     st.session_state.gemini_api_key = st.text_input(
         "Kunci API Gemini",
         type="password",
-        value=st.session_state.gemini_api_key,
+        value="AIzaSyAuIF8FP5E9FkOG7AGHZ_oEVCJNH3N25M0", # Pre-fill with the provided API key
         placeholder="Masukkan kunci API Gemini Anda di sini"
     )
 
@@ -534,5 +534,3 @@ if df is not None and not df.empty:
 
 else:
     st.info("Harap unggah file CSV untuk memulai.")
-
-
