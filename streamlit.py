@@ -150,7 +150,7 @@ def clean_data(df):
     # Fill missing categorical data with 'Unknown' or 'Neutral' or 'Other'
     df['Platform'] = df['Platform'].fillna('Unknown')
     df['Sentiment'] = df['Sentiment'].fillna('Netral')
-    df['Media Type'] = df['Media Type'].fillna('Lainnya')
+    df['Media_Type'] = df['Media_Type'].fillna('Lainnya') # <<< FIX: Changed 'Media Type' to 'Media_Type'
     df['Location'] = df['Location'].fillna('Unknown')
 
     return df
@@ -252,7 +252,7 @@ st.title("Dashboard Pemasaran Gemini")
 # File Upload Section
 st.markdown('<div class="container-bg-indigo-50">', unsafe_allow_html=True)
 st.markdown('<h2>Unggah Data CSV</h2>', unsafe_allow_html=True)
-uploaded_file = st.file_uploader("Unggah file CSV Anda di sini", type=["csv"])
+uploaded_file = st.file_uploader("Unggah file CSV Anda di sini", type=["csv")
 st.markdown('</div>', unsafe_allow_html=True)
 
 df = None
@@ -280,7 +280,7 @@ if df is not None and not df.empty:
     # Get unique values for filters
     all_platforms = ['Semua'] + sorted(df['Platform'].unique().tolist())
     all_sentiments = ['Semua'] + sorted(df['Sentiment'].unique().tolist())
-    all_media_types = ['Semua'] + sorted(df['Media Type'].unique().tolist())
+    all_media_types = ['Semua'] + sorted(df['Media_Type'].unique().tolist()) # <<< FIX: Changed 'Media Type' to 'Media_Type'
     all_locations = ['Semua'] + sorted(df['Location'].unique().tolist())
 
     col1, col2, col3 = st.columns(3)
@@ -333,7 +333,7 @@ if df is not None and not df.empty:
     if selected_sentiment != 'Semua':
         filtered_df = filtered_df[filtered_df['Sentiment'] == selected_sentiment]
     if selected_media_type != 'Semua':
-        filtered_df = filtered_df[filtered_df['Media Type'] == selected_media_type]
+        filtered_df = filtered_df[filtered_df['Media_Type'] == selected_media_type] # <<< FIX: Changed 'Media Type' to 'Media_Type'
     if selected_location != 'Semua':
         filtered_df = filtered_df[filtered_df['Location'] == selected_location]
 
@@ -411,8 +411,8 @@ if df is not None and not df.empty:
         # 4. Media Type Mix (Pie Chart)
         st.markdown('<div class="chart-card">', unsafe_allow_html=True)
         st.markdown('<h3>Distribusi Tipe Media</h3>', unsafe_allow_html=True)
-        media_type_counts = filtered_df['Media Type'].value_counts().reset_index()
-        media_type_counts.columns = ['Media Type', 'Count']
+        media_type_counts = filtered_df['Media_Type'].value_counts().reset_index() # <<< FIX: Changed 'Media Type' to 'Media_Type'
+        media_type_counts.columns = ['Media Type', 'Count'] # Column name for display in chart
         fig_media_type = px.pie(media_type_counts, values='Count', names='Media Type',
                                  title='Distribusi Tipe Media', hole=0.4,
                                  color_discrete_sequence=px.colors.qualitative.Pastel)
@@ -422,7 +422,7 @@ if df is not None and not df.empty:
         st.markdown('<h4>Wawasan Utama:</h4>')
         st.markdown(get_insights('media_type'), unsafe_allow_html=True)
         figs_for_pdf.append(fig_media_type)
-        metrics_for_gemini['media_type_counts'] = media_type_counts.set_index('Media Type')['Count']
+        metrics_for_gemini['media_type_counts'] = media_type_counts.set_index('Media Type')['Count'] # Use 'Media Type' for index
         st.markdown('</div>', unsafe_allow_html=True)
 
 
